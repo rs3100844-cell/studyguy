@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study hub — Modern Study Material Organiser</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFDE00'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-yellow-black">
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="#/dashboard" class="brand-logo" id="brandLogoLink">
+          <div class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              <path d="M9 10h6"></path>
+              <path d="M9 6h6"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Study<span class="brand-highlight">hub</span></span>
+            <span class="brand-tag">Material Organiser</span>
+          </div>
+        </a>
+        <button class="icon-btn mobile-close-btn" id="sidebarCloseBtn" aria-label="Close Sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">MAIN MENU</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#/dashboard" class="nav-item active" data-route="dashboard">
+              <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              </span>
+              <span class="nav-label">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#/search" class="nav-item" data-route="search">
+              <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              </span>
+              <span class="nav-label">Find Materials</span>
+            </a>
+          </li>
+          <li>
+            <a href="#/recent" class="nav-item" data-route="recent">
+              <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </span>
+              <span class="nav-label">Recently Opened</span>
+              <span class="nav-badge" id="sidebarRecentCount">0</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+          <span>SUBJECTS</span>
+          <button class="sidebar-add-btn" onclick="StudyApp.openAddSubjectModal()" title="Add Subject">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+        </div>
+        <div class="sidebar-subjects-list" id="sidebarSubjectsList">
+          <!-- Injected via JS -->
+        </div>
+
+        <div class="nav-section-title">STORAGE & TOOLS</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#/backup" class="nav-item" data-route="backup">
+              <span class="nav-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              </span>
+              <span class="nav-label">Backup & Restore</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Storage Info Card in Sidebar -->
+      <div class="sidebar-footer">
+        <div class="storage-widget">
+          <div class="storage-widget-header">
+            <span class="storage-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+              Local IndexedDB
+            </span>
+            <span class="storage-size" id="sidebarStorageSize">0 KB</span>
+          </div>
+          <div class="storage-bar-bg">
+            <div class="storage-bar-fill" id="sidebarStorageBar" style="width: 5%;"></div>
+          </div>
+          <p class="storage-note">Data saved in your browser</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <div class="app-main">
+      <!-- TOP NAVBAR -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-toggle" id="sidebarToggleBtn" aria-label="Toggle Navigation">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+          
+          <!-- Breadcrumb navigation -->
+          <nav class="breadcrumb-container" id="appBreadcrumbs" aria-label="Breadcrumb">
+            <!-- Dynamic breadcrumb links -->
+          </nav>
+        </div>
+
+        <!-- Global Search Bar in Topbar -->
+        <div class="topbar-search">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="globalSearchInput" placeholder="Search notes, e-books, images... (Press /)" autocomplete="off">
+            <kbd class="search-kbd">/</kbd>
+          </div>
+          <!-- Live search popup results -->
+          <div class="search-results-dropdown" id="searchResultsDropdown" style="display: none;"></div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Quick action buttons -->
+          <button class="btn btn-secondary btn-sm" id="loadDemoDataBtn" title="Load sample study materials to test the app">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="M2 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="M12 18v4"/><path d="m19.07 19.07-2.83-2.83"/><path d="M18 12h4"/><path d="m19.07 4.93-2.83 2.83"/></svg>
+            <span>Demo Pack</span>
+          </button>
+          <a href="#/backup" class="btn btn-yellow btn-sm" title="Backup or Restore data">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Backup</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- DYNAMIC VIEW CONTAINER -->
+      <main class="content-area" id="contentArea">
+        <!-- Rendered dynamically by app.js based on hash route -->
+      </main>
+    </div>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- 1. Subject Modal (Add/Edit) -->
+  <div class="modal-overlay" id="subjectModal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="subjectModalTitle">Add Subject</h3>
+        <button class="icon-btn modal-close" onclick="StudyApp.closeModal('subjectModal')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="subjectForm" onsubmit="StudyApp.handleSubjectSubmit(event)">
+        <input type="hidden" id="subjectFormId">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="subjectNameInput" class="form-label">Subject Name <span class="required">*</span></label>
+            <input type="text" id="subjectNameInput" class="form-control" placeholder="e.g. Mathematics, Science, English..." required autofocus>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject Color Tag</label>
+            <div class="color-picker-grid" id="subjectColorPicker">
+              <!-- Colors injected by JS -->
+            </div>
+            <input type="hidden" id="subjectColorInput" value="#FACC15">
+          </div>
+          <div class="form-group">
+            <label for="subjectDescInput" class="form-label">Description / Code (Optional)</label>
+            <input type="text" id="subjectDescInput" class="form-control" placeholder="e.g. NCERT Syllabus, Code 041">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="StudyApp.closeModal('subjectModal')">Cancel</button>
+          <button type="submit" class="btn btn-yellow" id="subjectSubmitBtn">Save Subject</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Chapter Modal (Add/Edit) -->
+  <div class="modal-overlay" id="chapterModal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="chapterModalTitle">Add Chapter</h3>
+        <button class="icon-btn modal-close" onclick="StudyApp.closeModal('chapterModal')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="chapterForm" onsubmit="StudyApp.handleChapterSubmit(event)">
+        <input type="hidden" id="chapterFormId">
+        <input type="hidden" id="chapterFormSubjectId">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group form-col-4">
+              <label for="chapterNumberInput" class="form-label">Chapter # <span class="required">*</span></label>
+              <input type="number" id="chapterNumberInput" class="form-control" min="1" max="99" value="1" required>
+            </div>
+            <div class="form-group form-col-8">
+              <label for="chapterTitleInput" class="form-label">Chapter Title <span class="required">*</span></label>
+              <input type="text" id="chapterTitleInput" class="form-control" placeholder="e.g. Real Numbers, Photosynthesis..." required autofocus>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="chapterDescInput" class="form-label">Key Topics / Description (Optional)</label>
+            <textarea id="chapterDescInput" class="form-control" rows="3" placeholder="Brief summary, key formulas or exam importance..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="StudyApp.closeModal('chapterModal')">Cancel</button>
+          <button type="submit" class="btn btn-yellow" id="chapterSubmitBtn">Save Chapter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Rename File Modal -->
+  <div class="modal-overlay" id="renameFileModal" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title">Rename File</h3>
+        <button class="icon-btn modal-close" onclick="StudyApp.closeModal('renameFileModal')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <form id="renameFileForm" onsubmit="StudyApp.handleRenameFileSubmit(event)">
+        <input type="hidden" id="renameFileId">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="renameFileInput" class="form-label">New Filename</label>
+            <input type="text" id="renameFileInput" class="form-control" required autofocus>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="StudyApp.closeModal('renameFileModal')">Cancel</button>
+          <button type="submit" class="btn btn-yellow">Rename</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Confirmation Modal -->
+  <div class="modal-overlay" id="confirmModal" style="display: none;">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <h3 class="modal-title" id="confirmModalTitle">Are you sure?</h3>
+        <button class="icon-btn modal-close" onclick="StudyApp.closeModal('confirmModal')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="confirmModalMessage" class="confirm-message">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="StudyApp.closeModal('confirmModal')">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmModalActionBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Fullscreen PDF Viewer Modal -->
+  <div class="modal-overlay modal-fullscreen-overlay" id="pdfViewerModal" style="display: none;">
+    <div class="modal-fullscreen-container">
+      <div class="pdf-viewer-header">
+        <div class="pdf-file-info">
+          <span class="file-badge pdf-badge">PDF</span>
+          <span class="pdf-title-text" id="pdfModalTitle">Document.pdf</span>
+        </div>
+        <div class="pdf-viewer-controls">
+          <button class="btn btn-ghost btn-sm" id="pdfOpenNewTabBtn" title="Open in New Tab">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+            <span>New Tab</span>
+          </button>
+          <button class="btn btn-yellow btn-sm" id="pdfDownloadBtn" title="Download PDF">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Download</span>
+          </button>
+          <button class="icon-btn modal-close" onclick="StudyApp.closeModal('pdfViewerModal')" title="Close viewer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="pdf-frame-wrapper" id="pdfFrameWrapper">
+        <iframe id="pdfViewerFrame" src="" title="PDF Viewer" frameborder="0"></iframe>
+        <div class="pdf-fallback-hint">
+          <span>Tip: If your browser does not render embedded PDFs inside iframes, click <strong>"New Tab"</strong> or <strong>"Download"</strong> above.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Image Lightbox Modal -->
+  <div class="modal-overlay modal-lightbox-overlay" id="imageLightboxModal" style="display: none;">
+    <div class="lightbox-container">
+      <div class="lightbox-header">
+        <div class="lightbox-title-area">
+          <span class="file-badge img-badge">IMG</span>
+          <span class="lightbox-title" id="lightboxTitle">Image.png</span>
+          <span class="lightbox-counter" id="lightboxCounter">1 / 1</span>
+        </div>
+        <div class="lightbox-tools">
+          <button class="icon-btn" id="lightboxZoomOut" title="Zoom Out">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="8" x2="14" y1="11" y2="11"/></svg>
+          </button>
+          <button class="icon-btn" id="lightboxZoomReset" title="Reset Zoom">100%</button>
+          <button class="icon-btn" id="lightboxZoomIn" title="Zoom In">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="11" x2="11" y1="8" y2="14"/><line x1="8" x2="14" y1="11" y2="11"/></svg>
+          </button>
+          <button class="btn btn-yellow btn-sm" id="lightboxDownloadBtn" title="Download Image">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Download</span>
+          </button>
+          <button class="icon-btn modal-close" onclick="StudyApp.closeModal('imageLightboxModal')" title="Close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="lightbox-stage">
+        <button class="lightbox-nav-btn prev-btn" id="lightboxPrevBtn" title="Previous Image (Left Arrow)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="lightbox-img-wrapper" id="lightboxImgWrapper">
+          <img id="lightboxImage" src="" alt="Study Note Preview">
+        </div>
+        <button class="lightbox-nav-btn next-btn" id="lightboxNextBtn" title="Next Image (Right Arrow)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Scripts -->
+  <script src="db.js"></script>
+  <script src="sample-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
